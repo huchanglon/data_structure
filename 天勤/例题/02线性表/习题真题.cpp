@@ -6,7 +6,6 @@
 // Created by roguelxx on 19-3-16.
 //
 /*
- * 1.2).(3)
  * 设计一个算法，将顺序表中的所有元素逆置
  */
 void reverse(Sqlist &L) {
@@ -20,7 +19,6 @@ void reverse(Sqlist &L) {
 }
 
 /*
- * 1.2).(4)
  * 从给定的顺序表L中删除下标i~j(i<=j, 包括i、j)的所有元素，设i、j都是合法输入。
  */
 void deleteBatch(Sqlist &L, int i, int j) {
@@ -33,7 +31,6 @@ void deleteBatch(Sqlist &L, int i, int j) {
 }
 
 /*
- * (5)
  * 顺序表L，元素为整型元素，将L中小于表头元素的整数放在前半部分，大于表头元素的整数放在后半部分。
  */
 void move(Sqlist &L) {
@@ -60,7 +57,6 @@ void move(Sqlist &L) {
 }
 
 /*
- * (6)
  * 有一个递增非空单链表，设计一个算法删除值域重复的结点。
  */
 void unique1(LNode *&L) {
@@ -155,8 +151,3 @@ void diverse(LNode *A, LNode *&B) {
         }
     }
 }
-
-int main() {
-
-}
-
