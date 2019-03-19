@@ -29,7 +29,7 @@ typedef struct LNode {
 typedef struct {
     int data[maxSize];
     int front;
-    int end;
+    int rear;
 } SqQueue;
 
 /*
