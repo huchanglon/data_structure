@@ -50,7 +50,7 @@ int pop(ShareStack &stack, int stNo, int &x) {
         if (stack.top[1] == maxSize) {
             return 0;
         } else {
-            x = stack.elem[stack.top[1]--];
+            x = stack.elem[stack.top[1]++];
             return 1;
         }
     } else {
