@@ -212,6 +212,8 @@ int concat(dynamicStr &str, dynamicStr str1, dynamicStr str2) {
     return 1;
 }
 
+int replaceAll();
+
 void testReplaceAll() {
     struct dynamicStr string1;
     struct dynamicStr string2;
@@ -221,8 +223,8 @@ void testReplaceAll() {
     string2.ch = str2;
     string1.length = strlen(str1);
     string2.length = strlen(str2);
-    replaceAll(string1, string2, 1, 2);
-    printf("%s", string1.ch);
+//    replaceAll(string1, string2, 1, 2);
+//    printf("%s", string1.ch);
 }
 
 void testMatch() {
