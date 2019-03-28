@@ -3,4 +3,6 @@ project(data_structure)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(data_structure 课本例题/01绪论/Status.h 课本例题/02线性表/SequenceList.h 课本例题/02线性表/SequenceList.c 课本例题/02线性表/SequenceList.cpp 天勤/例题/02线性表/结构体定义.h 天勤/例题/02线性表/顺序表的操作.cpp 天勤/例题/02线性表/单链表的操作.cpp 天勤/例题/02线性表/双链表的操作.cpp 天勤/例题/02线性表/真题仿造.cpp 天勤/例题/02线性表/习题真题.cpp)
+add_executable(str_basic 天勤/例题/04串/串的操作.cpp 天勤/例题/04串/习题真题.cpp)
+add_executable(str_match 天勤/例题/04串/串的模式匹配.cpp)
+add_executable(str_exercise 天勤/例题/04串/习题真题.cpp)

@@ -2,10 +2,10 @@
 // Created by roguelxx on 19-3-21.
 //
 
-#define maxSize 100
+#define maxSize 10
 
 typedef struct fixedStr{
-    char str[maxSize + 1];
+    char ch[maxSize + 1];
     int length;
 } fixedStr;
 

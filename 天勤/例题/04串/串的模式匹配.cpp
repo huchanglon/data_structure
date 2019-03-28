@@ -35,40 +35,6 @@ int index(dynamicStr str, dynamicStr substr) {
     }
 }
 
-/*
- * KMP算法
- */
-void getnext(dynamicStr substr, int next[]) {
-    next[1] = 0;
-    int i = 1, j = 0;
-    while (i < substr.length) {
-        if (j == 0 || substr.ch[i] == substr.ch[j]) {
-            ++i;
-            ++j;
-            next[i] = j;
-        } else {
-            j = next[j];
-        }
-    }
-}
-
-int KMP(dynamicStr str, dynamicStr substr, int next[]) {
-    int i = 1, j = 1;
-    while (i <= str.length && j <= substr.length) {
-        if (j == 0 || str.ch[i] == substr.ch[j]) {
-            ++i;
-            ++j;
-        } else {
-            j = next[j];
-        }
-    }
-    if (j > substr.length) {
-        return i - substr.length;
-    } else {
-        return 0;
-    }
-}
-
 void testIndex() {
     struct dynamicStr str1;
     struct dynamicStr str2;
@@ -82,5 +48,5 @@ void testIndex() {
 }
 
 int main() {
-
+    printf("%d", strlen("    "));
 }
