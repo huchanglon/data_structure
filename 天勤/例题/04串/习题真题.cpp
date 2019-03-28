@@ -164,17 +164,17 @@ void delBatch(fixedStr &str, int i, int j) {
 
 /*
  * 采用顺序存储方式存储串,编写一个函数,将串str1中的下标i到下标j之间的字符,
- * (包括i和j两个位置上的字符)用str2替换.
+ * (包括i和j两个位置上的字符)用串str2替换.
  */
 
 int subString(dynamicStr &substr, dynamicStr str, int pos, int length) {
     if (pos < 0 || pos > str.length - 1 || length < 0 || pos + length > str.length) {
         return -1;
     }
-//    if (substr.ch) {
-//        free(substr.ch);
-//        substr.ch = NULL;
-//    }
+    if (substr.ch) {
+        free(substr.ch);
+        substr.ch = NULL;
+    }
     if (length == 0) {
         substr.ch = NULL;
         substr.length = 0;
@@ -186,6 +186,7 @@ int subString(dynamicStr &substr, dynamicStr str, int pos, int length) {
         if (substr.ch != NULL) {
             for (j = 0; j < length; ++j, ++i) {
                 substr.ch[j] = str.ch[i];
+                ++substr.length;
             }
         }
         substr.ch[j] = '\0';
@@ -198,6 +199,9 @@ int concat(dynamicStr &str, dynamicStr str1, dynamicStr str2) {
 //        str.ch = NULL;
 //    }
     str.ch = (char *) malloc(sizeof(char) * (str1.length + str2.length + 1));
+    if (str.ch == NULL) {
+        return -1;
+    }
     int i = 0;
     while (i < str1.length) {
         str.ch[i] = str1.ch[i];
@@ -212,7 +216,75 @@ int concat(dynamicStr &str, dynamicStr str1, dynamicStr str2) {
     return 1;
 }
 
-int replaceAll();
+int replaceAll(dynamicStr &str1, dynamicStr str2, int i, int j) {
+    dynamicStr substr1;
+    substr1.ch = NULL;
+    substr1.length = 0;
+    dynamicStr substr2;
+    substr2.ch = NULL;
+    substr2.length = 0;
+    dynamicStr tempstr;
+    if (subString(substr1, str1, 0, i) == -1) {
+        return 0;
+    }
+    if (subString(substr2, str1, j + 1, str1.length - j - 1) == -1) {
+        return 0;
+    }
+    if (concat(tempstr, substr1, str2) == -1) {
+        return 0;
+    }
+    if (concat(str1, tempstr, substr2) == -1) {
+        return 0;
+    }
+    return 1;
+};
+
+/*
+ * 编写一个函数,计算一个子串在一个主串中出现的次数,
+ * 如果该子串不出现,则返回0.不考虑子串重叠.
+ * 如:主串为aaaa,子串为aaa,考虑子串重叠结构为2,不考虑子串重叠结果为1
+ */
+
+int matchCount (dynamicStr str, dynamicStr substr, int next[]) {
+    int i = 0, j = -1, k = 0;
+    while (i < str.length) {
+        if (j == 0 && i > str.length - substr.length) {
+            return k;
+        }
+        if (j == -1 || str.ch[i] == substr.ch[j]) {
+            ++i;
+            ++j;
+        } else {
+            j = next[j];
+        }
+        if (j == substr.length) {
+            ++k;
+            j = 0;
+        }
+    }
+    return k;
+}
+
+/*
+ * 构造串的链表结点数据结构(每个结点内存储一个字符),编写一个函数,找到串str1中第一个不在str2中出现的字符
+ */
+
+
+
+void testMatchCount() {
+    struct dynamicStr string1;
+    struct dynamicStr string2;
+    char str1[] = "aaabcccabc";
+    char str2[] = "abc";
+    string1.ch = str1;
+    string2.ch = str2;
+    string1.length = strlen(str1);
+    string2.length = strlen(str2);
+    int next[string2.length];
+    getNextVal(string2, next);
+    int i = matchCount(string1, string2, next);
+    printf("%d", i);
+}
 
 void testReplaceAll() {
     struct dynamicStr string1;
@@ -223,8 +295,8 @@ void testReplaceAll() {
     string2.ch = str2;
     string1.length = strlen(str1);
     string2.length = strlen(str2);
-//    replaceAll(string1, string2, 1, 2);
-//    printf("%s", string1.ch);
+    replaceAll(string1, string2, 1, 2);
+    printf("%s", string1.ch);
 }
 
 void testMatch() {
@@ -277,5 +349,6 @@ int main() {
 //    testReverse();
 //    testDelChar();
 //    testMatch();
-    testReplaceAll();
+//    testReplaceAll();
+    testMatchCount();
 }
