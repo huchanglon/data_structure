@@ -269,7 +269,43 @@ int matchCount (dynamicStr str, dynamicStr substr, int next[]) {
  * 构造串的链表结点数据结构(每个结点内存储一个字符),编写一个函数,找到串str1中第一个不在str2中出现的字符
  */
 
+typedef struct StrNode {
+   char data;
+   struct StrNode *next;
+} StrNode;
 
+char findFirst(StrNode *str1, StrNode *str2) {
+    for (StrNode *p = str1; p != NULL; p = p->next) {
+        bool flag = false;
+        for (StrNode *q = str2; q != NULL; q = q->next) {
+            if (p->data == q->data) {
+                flag = true;
+                break;
+            }
+            if (flag == false) {
+                return p->data;
+            }
+        }
+    }
+    return '\0';
+}
+
+char exclude(StrNode *str1, StrNode *str2) {
+    StrNode *p = str1;
+    StrNode *q = str2;
+    while (p->next != NULL) {
+        if (p->next->data != q->next->data) {
+            q = q->next;
+            if (q == NULL) {
+                return p->next->data;
+            }
+        } else {
+            p = p->next;
+            q = str2;
+        }
+    }
+    return '\0';
+}
 
 void testMatchCount() {
     struct dynamicStr string1;
