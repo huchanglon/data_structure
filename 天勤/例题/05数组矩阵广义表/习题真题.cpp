@@ -3,6 +3,10 @@
 //
 
 #include <stdio.h>
+#include <iostream>
+#include "结构体定义.h"
+
+using namespace std;
 
 /*
  * 设数组A[0,1,...,n-1]的n个元素中有多个非零元素,
@@ -120,8 +124,70 @@ void divide(int A[], int n) {
 }
 
 /*
- *
+ * 设计一个算法,对给定的一个整型m×n矩阵A,统计矩阵中具备下列特征的元素个数,
+ * 并输出它们的坐标及数值:①既是所在行的最小值,又是所在列的最小值;
+ * ②既是所在行中的最大值,又是所在列的最大值.假设矩阵中元素各不相同,要求结果打印在控制台.
  */
+
+void findMinMatrix(int A[][4], int m, int n) {
+    int i, j, mini, minj, k;
+    bool flag;
+    for (i = 0; i < m; ++i) {
+        mini = A[i][0];
+        minj = 0;
+        for (j = 0; j < n; ++j) {
+            if (A[i][j] < mini) {
+                mini = A[i][j];
+                minj = j;
+            }
+        }
+        flag = true;
+        for (k = 0; k < m; ++k) {
+            if (A[k][minj] < mini) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            cout << mini << ",[" << i << ", " << minj << "]" << " ";
+        }
+        cout << endl;
+    }
+}
+
+void findMaxMatrix(int A[][4], int m, int n) {
+    int i, j, maxi, maxj, k;
+    bool flag;
+    for (i = 0; i < m; ++i) {
+        maxi = A[i][0];
+        maxj = 0;
+        for (j = 1; j < n; ++j) {
+            if (A[i][j] > maxi) {
+                maxi = A[i][j];
+                maxj = j;
+            }
+        }
+        flag = true;
+        for (k = 0; k < m; ++k) {
+            if (A[j][maxj] > maxi) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            cout << maxi << ",[" << i << ", " << maxj << "]" << " ";
+        }
+    }
+    cout << endl;
+}
+
+void testFindMaxMatrix() {
+    int A[][4] = {{0, 0, 0, 1},
+                  {0, 0, 3, 2},
+                  {1, 0, 0, 0},
+                  {0, 2, 0, 0}};
+    findMinMatrix(A, 4, 4);
+}
 
 
 void testDivide() {
@@ -163,5 +229,6 @@ int main() {
 //    testMoveElement();
 //    testExercise2();
 //    testMoveOdd();
-    testDivide();
+//    testDivide();
+    testFindMaxMatrix();
 }

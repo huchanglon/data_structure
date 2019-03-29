@@ -2,6 +2,8 @@
 // Created by roguelxx on 19-3-29.
 //
 
+#define maxSize 10
+
 typedef struct {
     int val;
     int i, j;
