@@ -223,8 +223,8 @@ int search(int B[][3], int x) {
 void reverseTrimat(int A[][3], int B[][3]) {
     int p, q, col;
     B[0][0] = A[0][0];
-    B[0][1] = A[0][1];
-    B[0][2] = A[0][2];
+    B[0][1] = A[0][2];
+    B[0][2] = A[0][1];
     if (B[0][0] > 0) {
         q = 1;
         for (col = 0; col < B[0][1]; ++col) {
