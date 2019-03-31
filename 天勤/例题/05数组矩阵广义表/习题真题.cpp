@@ -16,8 +16,9 @@ void moveElement(int A[], int n) {
     int i = -1, j, temp;
     for (j = 0; j < n; ++j) {
         if (A[j] != 0) {
-            A[++i] = A[j];
-            A[j] = 0;
+            temp = A[j];
+            A[j] = A[++i];
+            A[i] = temp;
         }
     }
 }
