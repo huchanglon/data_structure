@@ -254,7 +254,7 @@ void addTrimat(int A[][3], int B[][3], int C[][3]) {
                 C[k][2] = A[i][2];
                 ++k;
                 ++i;
-            } else if (A[i][2] < B[j][2]) {
+            } else if (A[i][2] > B[j][2]) {
                 C[k][0] = B[j][0];
                 C[k][1] = B[j][1];
                 C[k][2] = B[j][2];
@@ -307,7 +307,7 @@ void addTrimat(int A[][3], int B[][3], int C[][3]) {
  */
 int getValue(int D[][3], int i, int j) {
     int k = 1;
-    while (k <= D[0][0] && D[k][1] == i && D[k][2] == j) {
+    while (k <= D[0][0] && (D[k][1] != i || D[k][2] != j)) {
         ++k;
     }
     if (k <= D[0][0]) {
@@ -323,7 +323,7 @@ void multipleTrimat(int A[][3], int B[][3], int C[][3], int m, int n, int k) {
         for (j = 0; j < k; ++j) {
             s=0;
             for (l = 0; l < n; ++l) {
-                s += getValue(A, i, l) + getValue(B, l, j);
+                s += getValue(A, i, l) * getValue(B, l, j);
             }
             if (s != 0) {
                 C[p][0] = s;
