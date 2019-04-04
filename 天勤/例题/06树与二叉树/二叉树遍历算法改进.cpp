@@ -162,7 +162,7 @@ void inorderThread(TBTNode *root) {
  * 二叉树前序遍历线索化
  */
 
-void preThread(TBTNode *p, TBTNode *pre) {
+void preThread(TBTNode *p, TBTNode *&pre) {
     if (p != NULL) {
         if (p->lchild == NULL) {
             p->lchild = pre;
@@ -175,6 +175,8 @@ void preThread(TBTNode *p, TBTNode *pre) {
         pre = p;
         if (p->ltag == 0) {
             preThread(p->lchild, pre);
+        }
+        if (p->rtag == 0) {
             preThread(p->rchild, pre);
         }
     }
@@ -201,7 +203,7 @@ void preorderThread(TBTNode *root) {
  * 二叉树后序遍历线索化
  */
 
-void postThread(TBTNode *p, TBTNode *pre) {
+void postThread(TBTNode *p, TBTNode *&pre) {
     if (p != NULL) {
         postThread(p->lchild, pre);
         postThread(p->rchild, pre);
