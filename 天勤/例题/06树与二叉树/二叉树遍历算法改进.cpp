@@ -194,8 +194,9 @@ void preorderThread(TBTNode *root) {
                 visit(p);
                 p = p->lchild;
             }
+            visit(p);
+            p = p->rchild;
         }
-        visit(p);
     }
 }
 
