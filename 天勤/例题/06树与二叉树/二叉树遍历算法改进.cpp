@@ -36,8 +36,8 @@ void inorderNonrecursion(BTNode *bt) {
         BTNode *p;
         p = bt;
         while (top != -1 || p != NULL) {
-            while (p->lchild != NULL) {
-                stack[++top] = p->lchild;
+            while (p != NULL) {
+                stack[++top] = p;
                 p = p->lchild;
             }
             if (top != -1) {
@@ -118,6 +118,16 @@ TBTNode *first(TBTNode *p) {
 }
 
 /*
+ * 遍历中序线索二叉树 - 以p为根的中序线索二叉树中,中序序列下的最后一个结点算法
+ */
+TBTNode *last(TBTNode *p) {
+    while (p->rtag == 0) {
+        p = p->rchild;
+    }
+    return p;
+}
+
+/*
  * 遍历中序线索二叉树 - 中序线索二叉树中,结点p在中序序列下的后继结点的算法
  */
 TBTNode *next(TBTNode *p) {
@@ -129,9 +139,20 @@ TBTNode *next(TBTNode *p) {
 }
 
 /*
+ * 遍历中序线索二叉树 - 中序线索二叉树中,结点p在中序序列下的后继结点的算法
+ */
+TBTNode *prior(TBTNode *p) {
+    if (p->ltag == 0) {
+        return last(p->lchild);
+    } else {
+        return p->lchild;
+    }
+}
+
+/*
  * 遍历中序线索二叉树
  */
-void inorder(TBTNode *root) {
+void inorderThread(TBTNode *root) {
     for (TBTNode *p = first(root); p != NULL; p = next(p)) {
         visit(p);
     }
@@ -163,7 +184,7 @@ void preThread(TBTNode *p, TBTNode *pre) {
  * 遍历中序线索二叉树
  */
 
-void preorderTravel(TBTNode *root) {
+void preorderThread(TBTNode *root) {
     if (root != NULL) {
         TBTNode *p = root;
         while (p != NULL) {
