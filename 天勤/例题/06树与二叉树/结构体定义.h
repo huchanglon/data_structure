@@ -23,5 +23,12 @@ typedef struct TBTNode {
     struct TBTNode *rchild;
 } TBTNode;
 
+typedef struct BTPNode {
+    char data;
+    struct BTPNode *parent;
+    struct BTPNode *lchild;
+    struct BTPNode *rchild;
+} BTPNode;
+
 void visit(BTNode *p) {}
 void visit(TBTNode *p) {}
