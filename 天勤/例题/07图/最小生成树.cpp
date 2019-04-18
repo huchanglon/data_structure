@@ -4,7 +4,6 @@
 
 #include "结构体定义.h"
 
-int INF;
 
 /*
  * Prim's Algorithm
@@ -20,7 +19,6 @@ void Prim(MGraph g, int v0, int &sum) {
     vset[v] = 1;
     sum = 0;
     for (i = 0; i < g.n - 1; ++i) {
-        // 已经定义的比图中所有边权值都大的常量
         min = INF;
         // 找出侯选边中的最小者
         for (j = 0; j < g.n; ++j) {
@@ -52,7 +50,7 @@ typedef struct {
 void sort(Road road[], int edges); // 对road数组中的E条边按其权值从小到大排序.
 
 Road road[maxSize];
-int v[maxSize];
+int v[maxSize]; // 并查集
 int getRoot(int a) {
     while (a != v[a]) {
         a = v[a];

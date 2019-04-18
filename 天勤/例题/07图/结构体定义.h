@@ -2,9 +2,14 @@
 // Created by roguelxx on 19-4-16.
 //
 
+using namespace std;
+
 #define maxSize 100
+// 已经定义的比图中所有边权值都大的常量
+#define INF 1000
 
 #include "malloc.h"
+#include <iostream>
 
 // 邻接矩阵
 typedef struct {
@@ -27,6 +32,7 @@ typedef struct ArcNode {
 
 typedef struct {
     char data;
+    int count;  // 顶点入度
     ArcNode *firstarc;
 } VNode;
 
