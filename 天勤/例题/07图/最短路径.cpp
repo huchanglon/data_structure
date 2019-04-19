@@ -23,8 +23,8 @@ void Dijkstra(MGraph g, int v, int dist[], int path[]) {
     }
     set[v] = 1;
     path[v] = -1;
-    min = INF;
     for (i = 0; i < g.n - 1; ++i) {
+        min = INF;
         for (j = 0; j < g.n; ++j) {
             if (set[j] == 0 && dist[j] < min) {
                 min = dist[j];
@@ -70,7 +70,7 @@ void Floyd(MGraph g, int path[][maxSize]) {
     for (k = 0; k < g.n; ++k) {
         for (i = 0; i < g.n; ++i) {
             for (j = 0; j < g.n; ++j) {
-                if (A[i][j] < A[i][k] + A[k][j]) {
+                if (A[i][j] > A[i][k] + A[k][j]) {
                     A[i][j] = A[i][k] + A[k][j];
                     path[i][j] = k;
                 }
