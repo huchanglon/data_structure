@@ -11,7 +11,7 @@ typedef struct {
     int top;
     int data[maxSize];
 } IntStack;
-/*
+/* 错题
  * 编写算法，判断一个表达式中的括号是否正确配对，表达时已经存入字符数组exp[]中，
  * 表达式中的字符个数为n。
  */
