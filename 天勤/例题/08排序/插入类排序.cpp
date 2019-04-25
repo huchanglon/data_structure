@@ -50,7 +50,7 @@ void binarySort(int arr[], int n) {
     for (i = 1; i < n; ++i) {
         temp = arr[i];
         j = i - 1;
-        idx = binarySearch(arr, temp, 0, n);
+        idx = binarySearch(arr, temp, 0, j);
         while (j >= idx) {
             arr[j + 1] = arr[j];
             --j;
