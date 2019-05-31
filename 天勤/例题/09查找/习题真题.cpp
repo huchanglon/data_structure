@@ -26,3 +26,21 @@ int isBST(BTNode *p) {
     }
 }
 
+/*
+ * 在平衡二叉树的每个结点中增设一个域lsize,
+ * 存储以该结点为根的左子树中的结点个数加1.编写一个算法,
+ * 确定树中第k(k>=1)个结点的位置.
+ */
+NBTNode *getNode(NBTNode *p, int n) {
+    if (p == NULL || n < 1) {
+        return NULL;
+    }
+    if (n == p->lsize) {
+        return p;
+    } else if (n > p->lsize) {
+        return getNode(p->rchild, n - p->lsize);
+    } else if (n < p->lsize) {
+        return getNode(p->lchild, n);
+    }
+}
+

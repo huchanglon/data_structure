@@ -12,6 +12,13 @@ typedef struct BTNode {
     struct BTNode *rchild;
 } BTNode;
 
+typedef struct NBTNode {
+    char data;
+    struct NBTNode *lchild;
+    struct NBTNode *rchild;
+    int lsize;
+} NBTNode;
+
 /*
  * tag = 0, child,
  * tag= 1, successor, predecessor
