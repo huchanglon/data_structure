@@ -264,3 +264,57 @@ int findMedian(int A[], int B[], int n) {
     }
     return A[s1] < B[s2] ? A[s1] : B[s2];
 }
+
+/*
+ * 已知一个整数序列A=(a0,a1,...,an-1),其中0<=ai<n.若存在ap1=ap2=...=apm=x
+ * 且m>n/2(0<=pk<n,1<=k<=m),则称x为A的主元素.假设A中的n个元素保存在一个一维数组中,
+ * 请设计一个算法,找出A的主元素.若存在,则输出钙元素;否则输出-1.
+ */
+
+int findMainElem(int A[], int n) {
+    int i, k = A[0], count = 1;
+    for (i = 1; i < n; ++i) {
+        if (A[i] == k) {
+            ++count;
+        } else {
+            --count;
+        }
+        if (count == 0) {
+            k = A[i];
+            count = 1;
+        }
+    }
+    if (count > 0) {
+        for (i = count = 0; i < n; ++i) {
+            if (A[i] == k) {
+                ++count;
+            }
+        }
+    }
+    if (count > n / 2) {
+        return k;
+    } else {
+        return -1;
+    }
+}
+
+/*
+ * 给定一个含n(n>=1)个整数的数组,设计一个高效算法,找出数组中未出现的最小正整数.
+ */
+int findMinInteger(int A[], int n) {
+    int i, *B;
+    B = (int *) malloc(sizeof(int) * n);
+    memset(B, 0, sizeof(int) * n); //赋值为0
+    for (i = 0; i < n; ++i) {
+        if (A[i] > 0 && A[i] <= n) {
+            B[A[i] - 1] = 1;
+        }
+    }
+    for (i = 0; i < n; ++i) {
+        if (B[i] == 0) {
+            break
+        }
+    }
+    // i == n, 即返回 n+1
+    return i + 1;
+}
