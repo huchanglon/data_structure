@@ -225,7 +225,7 @@ void printInAscending(LinkList &head) {
  * 中序号为奇数的元素,而B中含有原表中序号为偶数的元素,且保持其相对顺序不变,
  * 假设序号从0开始,结果返回单链表B.
  */
-LinkList divideLinkList(LinkList &A) {
+LinkList divideLinkList1(LinkList &A) {
     B = (LinkList *) malloc(sizeof(LNode));
     B->next = NULL;
     LNode *ra = A, *rb = B;
@@ -248,7 +248,7 @@ LinkList divideLinkList(LinkList &A) {
     return B;
 }
 
-LinkList divideLinkList(LinkList &A) {
+LinkList divideLinkList2(LinkList &A) {
     B = (LinkList *) malloc(sizeof(LNode));
     B->next = NULL;
     LNode *ra = A, *rb = B;
@@ -268,4 +268,281 @@ LinkList divideLinkList(LinkList &A) {
     ra->next = NULL;
     rb->next = NULL;
     return B;
+}
+
+/*
+ * 设A={a1,b1,a2,b2,...,an,bn}为线性表,采用带头结点的A单链表存放,设计一个就地算法,
+ * 将其拆分为两个线性表,使得A={a1,a2,...,an},B={bn,...,b2,b1}
+ */
+LinkList divideLinkList3(LinkList &A) {
+    LinkList B = (LinkList *) malloc(sizeof(LinkList));
+    B->next = NULL;
+    LNode *r = A;
+    LNode *p = A->next, *q;
+    while (p != NULL) {
+        r->next=p;
+        r = p;
+        p = p->next;
+        q = p->next;
+        p->next = B->next;
+        B->next = p;
+        p = q;
+    }
+    r->next = NULL;
+    return B;
+}
+
+/*
+ * 在一个递增有序的线性表中,有数值相同的元素存在.若存储方式为单链表,
+ * 设计算法去掉数值相同的元素.
+ */
+void deleteDuplicate(LinkList &L) {
+    LNode *p = L->next, *q;
+    while (p != NULL) {
+        if (p->data == p->next->data) {
+            q = p->next;
+            p->next = q->next;
+            free(q);
+        } else {
+            p = p->next;
+        }
+    }
+}
+
+/*
+ * 假设有两个按元素值递增次序排列的线性表,均以单链表形式存储.编写一个算法,
+ * 将这两个单链表归并为一个按元素值递减次序排列的单链表,并要求利用原来两个
+ * 单链表的结点存放归并后的单链表.
+ */
+void mergeToDescend(LinkList &A, LinkList &B) {
+    LNode *s1 = A->next, *q;
+    LNode *s2 = B->next;
+    A->next = NULL;
+    while (s1 != NULL && s2 != NULL) {
+        if (s1->data <= s2->data) {
+            q = s1->next;
+            s1->next = A->next;
+            A->next = s1;
+            s1 = q;
+        } else {
+            q = s2->next;
+            s2->next = A->next;
+            A->next = s2;
+            s2 = q;
+        }
+    }
+    if (s1 != NULL) {
+        s2 = s1;
+    }
+    while (s2 != NULL) {
+        q = s2->next;
+        s2->next = A->next;
+        A->next = s2;
+        s2 = q;
+    }
+    free(B)
+}
+
+/*
+ * 设A和B是两个单链表(带头结点),其中元素递增有序.设计一个算法从A和B中
+ * 的公共元素产生单链表C,要求不破坏A、B的结点.
+ */
+LinkList sameValueList(LinkList A, LinkList B) {
+    LinkList C = (LinkList *) malloc(sizeof(LNode));
+    C->next = NULL;
+    LNode *pa = A->next, *pb = B->next, *q, *rc = C;
+    while (pa && pb) {
+        if (pa->data == pb->data) {
+            q = (LNode *) malloc(sizeof(LNode));
+            q->data = pa->data;
+            rc->next = q;
+            rc = q;
+            pb = pb->next;
+            pa = pa->next;
+        }
+        if (pa->data > pb->data) {
+            pb = pb->next;
+        } else {
+            pa = pa->next;
+        }
+    }
+    rc - next = NULL;
+    return C;
+}
+
+/*
+ * 已知两个链表A和B分别表示两个集合,其元素递增有序.编写一个算法,求A和B的交集,
+ * 并存放在A链表中,其余结点全部释放.
+ */
+void getIntersection(LinkList &A, LinkList B) {
+    LNode *pa = A->next, *r = A, *pb = B->next, *q;
+    A->next = NULL;
+    while (pa && pb) {
+        if (pa->data == pb->data) {
+            q = pa->next;
+            r->next = pa;
+            r = pa;
+            pb = pb->next;
+            pa = q;
+        }
+        if (pa->data > pb->data) {
+            q = pb->next;
+            free(pb);
+            pb = q;
+        } else {
+            q = pa->next;
+            free(pa);
+            pa = q;
+        }
+    }
+    if (pa) {
+        pb = pa;
+    }
+    while (pb) {
+        q = pb->next;
+        free(pb);
+        pb = q;
+    }
+    r->next = NULL;
+    free(B);
+}
+
+/*
+ * 两个整数序列A=a1,a2,a3,...am和B=b1,b2,b3,...,bn已经存入两个单链表中,
+ * 设计一个算法,判断序列B是否是序列A的连续子序列,假设AB带头结点
+ */
+bool isSubList(LinkList A, LinkList B) {
+    LNode *pa = A->next, *pre, *pb = B->next;
+    while (pa && pb) {
+        if (pa->data == pb->data) {
+            pre = pa;
+            pa = pa->next;
+            pb = pb->next;
+        } else {
+            pre = pre->next
+            pa = pre;
+            pb = B->next;
+        }
+    }
+    if (pb == NULL) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/*
+ * 设计一个算法用于判断带头结点的循环双链表是否对称,奇数偶数个都存在对称性.
+ */
+bool isSymmetry(LinkList A) {
+    LNode *s = A->next, *r = A->prior;
+    while (s != r && r->next != s) {
+        if (s->data != r->data) {
+            return false;
+        } else {
+            s = s->next;
+            r = r->prior;
+        }
+    }
+    return true;
+}
+
+/*
+ * 有两个循环单链表,链表头指针分别为h1和h2,编写一个算法将h2链接到h1之后,
+ * 要求链接后的链表仍保持循环链表形式.
+ */
+void linkAfter(LinkList &h1, LinkList &h2) {
+    LNode *p1 = h1, *p2 = h2;
+    while (p1->next != h1) {
+        p1 = p1->next;
+    }
+    p1->next = h2;
+    while (p2->next != h2) {
+        p2 = p2->next;
+    }
+    p2->next = h1;
+}
+
+/*
+ * 设有一个带头结点的循环单链表,其结点值均为正整数.设计一个算法,反复找出单链表中结点值
+ * 最小的结点并输出,然后将该结点从中删除,直到单链表空为止,再删除表头结点.
+ */
+void deleteByMin(LinkList &L) {
+    LNode *p = L->next, *pre = L;
+    LNode *min = p, *minpre = pre;
+    while (L->next != NULL) {
+        p = L->next;
+        pre = L;
+        min = p;
+        minpre = pre;
+        while (p != L) {
+            if (p->data < min->data) {
+                min = p;
+                minpre = pre;
+            }
+            pre = p;
+            p = p->next;
+        }
+        minpre->next = min->next;
+        free(min);
+    }
+    free(L);
+}
+
+/*
+ * 设头指针为L的带有头结点的非循环双向链表,其每个结点中添加一个属性,访问频度域freq.
+ * 在链表被启用前,其值均初始化为零.每当在链表中进行一次Locate(L,x)运算,令元素值为x
+ * 的结点中freq域的值增加1,并使此链表中结点保持按访问频度非增的顺序排列,同时最近访问
+ * 的结点排在频度相同的结点前,以便使频繁访问的结点总是靠近表头.试写符合上述要求的Locate(L, x)
+ * 运算的算法,该算法返回找到结点的地址,类型为指针型.
+ */
+LNode *Locate(LinkList &L, ElemType x) {
+    LNode *p = L->next, *q;
+    while (p != NULL && p->data != x) {
+        p = p->next;
+    };
+    if (!p) {
+        printf("不存在值为x的结点\n");
+        exit(0);
+    } else {
+        ++p->freq;
+        p->next->pred = p->pred;
+        p->pred->next = p->next;
+        q = p->pred;
+        while (q != L && q->freq > p->freq) {
+            q = q->freq;
+        }
+        p->next = q->next;
+        q->next->pred = p;
+        p->pred = q;
+        q->next = p;
+    }
+    return q;
+}
+
+/*
+ * 已知一个带头结点的单链表,结点结构为data,link.假设该链表只给了头指针list.在不改变链表的前提下,
+ * 请设计一个算法,查找链表中倒数第k个位置上的结点(k为正整数).若查找成功,输出该结点的data,并返回1;
+ * 否则,返回0.
+ */
+int locateReciprocal(LinkList list, int k) {
+    if (k <= 0) {
+        return 0;
+    }
+    LNode *p = list->link, *pre = list->link;
+    int count = 0;
+    while (p != NULL) {
+        if (count < k) {
+            ++count;
+        } else {
+            q = q->link;
+        }
+        p = p->link;
+    }
+    if (count < k) {
+        return 0;
+    } else {
+        printf("%d", q->data);
+        return 1;
+    }
 }
