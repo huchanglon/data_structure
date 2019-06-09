@@ -546,3 +546,67 @@ int locateReciprocal(LinkList list, int k) {
         return 1;
     }
 }
+
+/*
+ * 假定采用带头结点的单链表保存单词,当两个单词有相同的后缀时,可共享相同的后缀空间,
+ * 例如,"loading"和"being".设str1和str2分别指向两个单词所在单链表的头结点,
+ * 链表结构为data,next.设计一个高效算法,由str1和str2所指向两个链表共同后缀的起始位置.
+ */
+LNode *findCommon(LinkList str1, LinkList str2) {
+    int l1 = getLength(str1);
+    int l2 = getLength(str2);
+    int diff;
+    LNode *shortWord, *longWord, *p;
+    if (l1 > l2) {
+        shortWord = str2;
+        longWord = str1;
+        diff = l1 - l2;
+    } else {
+        shortWord = str1;
+        longWord = str2;
+        diff = l2 - l1;
+    }
+    while (diff > 0) {
+        longWord = longWord->next;
+        --diff;
+    }
+    while (longWord != NULL) {
+        if (longWord == shortWord) {
+            p = longWord;
+            return p;
+        } else {
+            longWord = longWord->next;
+            shortWord = shortWord->next;
+        }
+    }
+    return NULL;
+}
+
+/*
+ * 用单链表保存m个整数,结点的结构为data,link.且|data|<=n(n为正整数).设计一个时间复杂度
+ * 尽可能高的算法,对于链表中data的绝对值相等的结点,仅保留第一次出现的结点,删除其余结点.
+ */
+typedef struct LNode {
+    int data,
+    struct LNode *link;
+} LNode;
+void delSameAbs(LNode *L, int n) {
+    int *arr, i;
+    arr = (int *) malloc(sizeof(int) * (n + 1));
+    for (i = 0; i < n; ++i) {
+        *(arr + i) = 0;
+    }
+    LNode *p = L, *q;
+    while (p->link != NULL) {
+        i = p->link->data > 0 ? p->link->data : -p->link->data;
+        if (*(arr + i) == 1) {
+            q = p->link;
+            p->link = q->link;
+            free(q);
+        } else {
+            *(arr + i) = 1;
+            p = p->link;
+        }
+    }
+    free(arr);
+}
