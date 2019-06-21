@@ -454,3 +454,84 @@ BiThrTree InPostPre(BiThrTree t, BiThrTree p) {
     }
     return q;
 }
+
+/*
+ * 二叉树的带权路径长度(WPL)是二叉树中所有叶结点的带权路径长度之和.给定一棵二叉树T
+ * 采用二叉链表存储,结点结构为(left,weight,right).其中叶结点的weight域保存该结
+ * 点的非负权值.root为指向T的根结点的指针,设计算法,求出T的WPL.
+ */
+typedef struct BiTNode {
+    int weight;
+    struct BiTNode *lchild, *rchild;
+}BiTNode, *BiTree;
+
+// 前序遍历递归实现
+int WPLPreOrder(BiTree root, int depth) {
+    static int wpl;
+    if (root->lchild == NULL && root->rchild == NULL) {
+        wpl += depth * root->weight;
+    }
+    if (root->lchild != NULL) {
+        WPLPreOrder(root->lchild, depth + 1);
+    } else if (root->rchild) {
+        WPLPreOrder(root->rchild, depth + 1);
+    }
+    return wpl;
+}
+
+// 层次遍历
+int WPLLevelOrder(BiTree root) {
+    int depth = 0, wpl = 0;
+    BiTree q[maxSize];
+    int front = -1, rear = -1;
+    BiTree p, nowLastNode, nextLastNode;
+    q[++rear] = root;
+    nowLastNode = root;
+    nextLastNode = NULL;
+    while (front < rear) {
+        p = q[++front];
+        if (p->lchild == NULL && p->rchild == NULL) {
+            wpl += p->weight * depth;
+        }
+        if (p->lchild != NULL) {
+            q[++rear] = p->lchild;
+            nextLastNode = p->lchild;
+        }
+        if (p->rchild != NULL) {
+            q[++rear] = p->rchild;
+            nextLastNode = p->lchild;
+        }
+        if (p == nowLastNode) {
+            nowLastNode = nextLastNode;
+            depth++;
+        }
+    }
+    return depth;
+}
+
+/*
+ * 设计一个算法,将给定的表达式树(二叉树)转换为等价的中缀表达式(利用括号表达操作符的计算次序)
+ * 并输出.
+ */
+typedef struct node {
+    char data[10];
+    struct node *left, *right;
+} BTree;
+
+void PrintInfixExpression(BTree *root, int depth) {
+    if (root == NULL) {
+        return;
+    } else if (root->left == NULL && root->right == NULL) {
+        printf("%s", root->data);
+    } else {
+        if (depth > 1) {
+            printf("(");
+        }
+        PrintInfixExpression(root->left, depth + 1);
+        printf("s", root->data);
+        PrintInfixExpression(root->right, depth + 1);
+        if (depth > 1) {
+            printf(")");
+        }
+    }
+}
